@@ -2,7 +2,6 @@ package main
 
 import (
 	"image/jpeg"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -26,13 +25,13 @@ func main() {
 			if err != nil {
 				panic(err)
 			}
-			defer file.Close()
 			jpeg.Encode(file, img, nil)
-			buf, err := ioutil.ReadFile("tmp.jpeg")
+			buf, err := os.ReadFile("tmp.jpeg")
 			if err != nil {
 				panic(err)
 			}
 			stream.UpdateJPEG(buf)
+			file.Close()
 		}
 	}(stream)
 
